@@ -215,10 +215,10 @@ public class DatabaseFederationProvider implements UserFederationProvider {
 	private boolean isExistisUser(String username) {
 		try (Connection connection = this.datasource.getConnection()) {
 			try (PreparedStatement statement = connection.prepareStatement(sqlExistsUserByName)) {
-				statement.setString(0, username);
+				statement.setString(1, username);
 				try (ResultSet result = statement.executeQuery()) {
 					if (result.next()) {
-						int userCount = result.getInt(0);
+						int userCount = result.getInt(1);
 						if (userCount > 0) {
 							return true;
 						}
@@ -237,10 +237,10 @@ public class DatabaseFederationProvider implements UserFederationProvider {
 	private String getUserPassword(String username){
 		try (Connection connection = this.datasource.getConnection()) {
 			try (PreparedStatement statement = connection.prepareStatement(sqlPasswordOfUser)) {
-				statement.setString(0, username);
+				statement.setString(1, username);
 				try (ResultSet result = statement.executeQuery()) {
 					if (result.next()) {
-						String userPassword = result.getString(0);
+						String userPassword = result.getString(1);
 						return userPassword;
 					}
 				}
